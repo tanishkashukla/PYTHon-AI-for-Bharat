@@ -20,3 +20,18 @@
 
 ### Tools
 <img src="https://skillicons.dev/icons?i=git,vscode,docker" />
+
+## 🏗 System Architecture
+
+```mermaid
+flowchart TD
+
+User -->|Access Web App| Amplify
+Amplify -->|API Request| API_Gateway
+API_Gateway -->|Trigger| Lambda_Function
+
+Lambda_Function -->|Store Metadata| DynamoDB
+Lambda_Function -->|Retrieve Documents| S3
+
+Lambda_Function -->|Return Response| Amplify
+```

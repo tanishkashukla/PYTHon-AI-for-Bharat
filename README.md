@@ -26,12 +26,15 @@
 ```mermaid
 flowchart TD
 
-User -->|Access Web App| Amplify
-Amplify -->|API Request| API_Gateway
-API_Gateway -->|Trigger| Lambda_Function
+A[Frontend<br>React / Simple UI] --> B[API Gateway<br>POST /ask]
 
-Lambda_Function -->|Store Metadata| DynamoDB
-Lambda_Function -->|Retrieve Documents| S3
+B --> C[ask_legal Lambda<br>Python Backend]
 
-Lambda_Function -->|Return Response| Amplify
+C --> D[Generate Embedding<br>Titan Embeddings]
+
+D --> E[Vector Search<br>DynamoDB Cosine Similarity]
+
+E --> F[Claude 3 Haiku<br>Answer Generation]
+
+F --> G[JSON Response Returned<br>to Frontend]
 ```

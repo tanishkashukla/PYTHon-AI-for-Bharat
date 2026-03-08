@@ -61,20 +61,11 @@ export const ChatWidget: React.FC<ChatWidgetProps> = ({ language, sessionId }) =
 
       setMessages(prev => [...prev, { role: 'assistant', structuredResponse: response }]);
     } catch (err: any) {
-      if (err.message === "GEMINI_API_KEY_MISSING" || err.message === "GEMINI_API_KEY_INVALID") {
-        setError(language === 'hi' ? 'कृपया एक मान्य API कुंजी चुनें।' : 'Please select a valid API key.');
-        // If the platform provides a key selection dialog, we can trigger it
-        if ((window as any).aistudio?.openSelectKey) {
-          (window as any).aistudio.openSelectKey();
-        }
-      } else {
-        setError(l.error);
-      }
-    } finally {
-      setLoading(false);
-    }
+  setError(err?.message || l.error);
+}
   };
 
+ 
   useEffect(() => {
     if (isOpen && inputRef.current) {
       inputRef.current.focus();

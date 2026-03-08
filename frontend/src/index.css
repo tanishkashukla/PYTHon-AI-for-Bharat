@@ -1,68 +1,110 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+@custom-variant dark (&:where(.dark, .dark *, [data-theme="dark"], [data-theme="dark"] *));
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
-}
-
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+@layer base {
+  body {
+    @apply bg-white text-[#3d2b1f] antialiased selection:bg-[#5a3e2b]/10 transition-colors duration-300;
   }
-  a:hover {
-    color: #747bff;
+  
+  .dark body,
+  [data-theme="dark"] body {
+    @apply bg-[#f5f2ed];
   }
-  button {
-    background-color: #f9f9f9;
+  @media (min-width: 768px) {
+    body {
+      @apply cursor-none;
+    }
   }
+}
+
+@layer components {
+  .glass-brown {
+    @apply bg-[#f5f2ed]/60 backdrop-blur-2xl border border-[#5a3e2b]/20 transition-all duration-300;
+  }
+  .dark .glass-brown {
+    @apply bg-white/60 border-[#5a3e2b]/20;
+  }
+
+  .glow-brown {
+    @apply shadow-[0_0_20px_-5px_rgba(90,62,43,0.1)] transition-shadow duration-300;
+  }
+  .dark .glow-brown {
+    @apply shadow-[0_0_20px_-5px_rgba(90,62,43,0.1)];
+  }
+
+  .glow-brown-strong {
+    @apply shadow-[0_0_40px_-10px_rgba(90,62,43,0.2)] transition-shadow duration-300;
+  }
+  .dark .glow-brown-strong {
+    @apply shadow-[0_0_40px_-10px_rgba(90,62,43,0.2)];
+  }
+
+  .text-glow {
+    @apply drop-shadow-[0_0_8px_rgba(90,62,43,0.2)] transition-all duration-300;
+  }
+  .dark .text-glow {
+    @apply drop-shadow-[0_0_8px_rgba(90,62,43,0.2)];
+  }
+
+  .markdown-body {
+    @apply text-sm leading-relaxed text-[#3d2b1f] transition-colors duration-300;
+  }
+  .dark .markdown-body {
+    @apply text-[#3d2b1f];
+  }
+
+  .markdown-body h1, .markdown-body h2, .markdown-body h3 {
+    @apply text-[#5a3e2b] font-black uppercase tracking-widest mt-4 mb-2 transition-colors duration-300;
+  }
+  .dark .markdown-body h1, .dark .markdown-body h2, .dark .markdown-body h3 {
+    @apply text-[#5a3e2b];
+  }
+
+  .markdown-body strong {
+    @apply text-[#5a3e2b] font-bold transition-colors duration-300;
+  }
+  .dark .markdown-body strong {
+    @apply text-[#5a3e2b];
+  }
+
+  .bg-grain {
+    position: relative;
+  }
+
+  .bg-grain::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.02;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-white transition-colors duration-300;
+}
+.dark ::-webkit-scrollbar-track {
+  @apply bg-[#f5f2ed];
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-[#5a3e2b]/20 rounded-full hover:bg-[#5a3e2b]/40 transition-colors;
+}
+.dark ::-webkit-scrollbar-thumb {
+  @apply bg-[#5a3e2b]/20 hover:bg-[#5a3e2b]/40;
 }

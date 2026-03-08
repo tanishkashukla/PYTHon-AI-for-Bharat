@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { MessageBubble } from './MessageBubble';
 import { ChatResponse } from '../lib/api';
-import { Loader2 } from 'lucide-react';
+import { Loader2 } from 'lucide-react'; 
 
 interface Message {
   role: 'user' | 'assistant';

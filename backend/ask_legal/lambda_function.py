@@ -32,6 +32,16 @@ def convert_floats(obj):
         return [convert_floats(v) for v in obj]
     return obj
 
+def make_json_safe(obj):
+    if isinstance(obj, Decimal):
+        # use float for scores, int for whole numbers if you prefer
+        return float(obj)
+    elif isinstance(obj, dict):
+        return {k: make_json_safe(v) for k, v in obj.items()}
+    elif isinstance(obj, list):
+        return [make_json_safe(v) for v in obj]
+    return obj
+
 def put_cached_response(query: str, response_obj: dict):
     query_hash = hash_query(query)
 
@@ -111,7 +121,7 @@ def call_claude(user_query: str, contexts: list[dict]) -> dict:
         modelId=CLAUDE_MODEL_ID,
         contentType="application/json",
         accept="application/json",
-        body=json.dumps(body)
+        body=json.dumps(make_json_safe(body))
     )
     out = json.loads(resp["body"].read())
     return json.loads(out["content"][0]["text"])
@@ -146,7 +156,7 @@ def call_nova_fallback(user_query: str, contexts: list[dict]) -> dict:
         modelId=FALLBACK_MODEL_ID,
         contentType="application/json",
         accept="application/json",
-        body=json.dumps(payload)
+        body=json.dumps(make_json_safe(payload))
     )
     out = json.loads(resp["body"].read())
 
@@ -159,7 +169,7 @@ def call_nova_fallback(user_query: str, contexts: list[dict]) -> dict:
     elif "results" in out:
         text = out["results"][0]["outputText"]
     else:
-        text = json.dumps(out)
+        text = json.dumps(make_json_safe(out))
 
     article = contexts[0]["section"] if contexts else ""
     return parse_json_or_wrap(text, article)
@@ -197,9 +207,10 @@ def lambda_handler(event, context):
             cached_resp = cached["response"]
             cached_resp["model_used"] = "cache"
             cached_resp["cache_hit"] = True
+            cached_resp = make_json_safe(cached_resp)
             return {
                 "statusCode": 200,
-                "body": json.dumps(cached_resp)
+                "body": json.dumps(make_json_safe(cached_resp))
             }
 
         if not ENABLE_BEDROCK:
@@ -229,7 +240,7 @@ def lambda_handler(event, context):
                 "retrieval_score": best_score
             }
             put_cached_response(q, response_obj)
-            return {"statusCode": 200, "body": json.dumps(response_obj)}
+            return {"statusCode": 200, "body": json.dumps(make_json_safe(response_obj))}
 
         # 3) Try Claude first
         try:
@@ -248,7 +259,7 @@ def lambda_handler(event, context):
         # 5) Cache store
         put_cached_response(q, response_obj)
 
-        return {"statusCode": 200, "body": json.dumps(response_obj)}
+        return {"statusCode": 200, "body": json.dumps(make_json_safe(response_obj))}
 
     except Exception as e:
         return {

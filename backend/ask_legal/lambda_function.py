@@ -15,6 +15,12 @@ ENABLE_BEDROCK = os.environ.get("ENABLE_BEDROCK", "false").lower() == "true"
 emb_table = ddb.Table(DDB_TABLE)
 cache_table = ddb.Table(CACHE_TABLE)
 
+CORS_HEADERS = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Allow-Methods": "POST,OPTIONS"
+}
+
 def hash_query(query: str) -> str:
     return hashlib.sha256(query.strip().lower().encode("utf-8")).hexdigest()
 
@@ -34,7 +40,6 @@ def convert_floats(obj):
 
 def make_json_safe(obj):
     if isinstance(obj, Decimal):
-        # use float for scores, int for whole numbers if you prefer
         return float(obj)
     elif isinstance(obj, dict):
         return {k: make_json_safe(v) for k, v in obj.items()}
@@ -44,7 +49,6 @@ def make_json_safe(obj):
 
 def put_cached_response(query: str, response_obj: dict):
     query_hash = hash_query(query)
-
     safe_response = convert_floats(response_obj)
 
     cache_table.put_item(Item={
@@ -129,7 +133,6 @@ def call_claude(user_query: str, contexts: list[dict]) -> dict:
 def call_nova_fallback(user_query: str, contexts: list[dict]) -> dict:
     ctx = build_context(contexts)
 
-    # Converse-style payloads are recommended for Nova in AWS docs
     payload = {
         "messages": [
             {
@@ -160,7 +163,6 @@ def call_nova_fallback(user_query: str, contexts: list[dict]) -> dict:
     )
     out = json.loads(resp["body"].read())
 
-    # Nova response formats can vary by model/runtime evolution
     text = ""
     if "output" in out and "message" in out["output"]:
         parts = out["output"]["message"].get("content", [])
@@ -199,7 +201,11 @@ def lambda_handler(event, context):
 
         q = (body.get("query") or "").strip()
         if not q:
-            return {"statusCode": 400, "body": json.dumps({"error": "query is required"})}
+            return {
+                "statusCode": 400,
+                "headers": CORS_HEADERS,
+                "body": json.dumps({"error": "query is required"})
+            }
 
         # 1) Cache check
         cached = get_cached_response(q)
@@ -210,20 +216,21 @@ def lambda_handler(event, context):
             cached_resp = make_json_safe(cached_resp)
             return {
                 "statusCode": 200,
-                "body": json.dumps(make_json_safe(cached_resp))
+                "headers": CORS_HEADERS,
+                "body": json.dumps(cached_resp)
             }
 
         if not ENABLE_BEDROCK:
-            return {"statusCode": 503, "body": json.dumps({
-                "error": "Bedrock disabled. Set ENABLE_BEDROCK=true after billing/model access is ready."
-            })}
+            return {
+                "statusCode": 503,
+                "headers": CORS_HEADERS,
+                "body": json.dumps({
+                    "error": "Bedrock disabled. Set ENABLE_BEDROCK=true after billing/model access is ready."
+                })
+            }
 
         # 2) Retrieval
         top, best_score = retrieve_top_contexts(q, k=3)
-        sources = [
-            {"section": c["section"], "category": c["category"]}
-            for c in top
-        ]
 
         if best_score >= 0.75:
             top = top[:1]
@@ -231,6 +238,11 @@ def lambda_handler(event, context):
             top = top[:2]
         else:
             top = top[:3]
+
+        sources = [
+            {"section": c["section"], "category": c["category"]}
+            for c in top
+        ]
 
         if not top or best_score < 0.15:
             response_obj = {
@@ -240,36 +252,57 @@ def lambda_handler(event, context):
                 "disclaimer": "No relevant legal information found in provided sources. This is legal awareness only, not legal advice.",
                 "article_cited": "",
                 "model_used": "none",
-                "cache_hit": False, 
+                "cache_hit": False,
                 "retrieval_score": best_score
             }
             put_cached_response(q, response_obj)
-            return {"statusCode": 200, "body": json.dumps(make_json_safe(response_obj))}
+            return {
+                "statusCode": 200,
+                "headers": CORS_HEADERS,
+                "body": json.dumps(make_json_safe(response_obj))
+            }
 
-        # 3) Try Claude first
+        # 3) Try Claude first, then Nova fallback
+        response_obj = None
+
         try:
             response_obj = call_claude(q, top)
             response_obj["model_used"] = "claude"
             response_obj["cache_hit"] = False
             response_obj["retrieval_score"] = best_score
             response_obj["sources_used"] = sources
-        except ClientError as e:
-            # 4) Fallback to Nova
-            response_obj = call_nova_fallback(q, top)
-            response_obj["model_used"] = "nova_fallback"
-            response_obj["cache_hit"] = False
-            response_obj["fallback_reason"] = str(e)
-            response_obj["retrieval_score"] = best_score
-            response_obj["sources_used"] = sources
 
-        # 5) Cache store
+        except ClientError as e:
+            try:
+                response_obj = call_nova_fallback(q, top)
+                response_obj["model_used"] = "nova_fallback"
+                response_obj["cache_hit"] = False
+                response_obj["fallback_reason"] = str(e)
+                response_obj["retrieval_score"] = best_score
+                response_obj["sources_used"] = sources
+            except Exception as fallback_error:
+                return {
+                    "statusCode": 500,
+                    "headers": CORS_HEADERS,
+                    "body": json.dumps({
+                        "error": "Both primary and fallback models failed",
+                        "details": str(fallback_error)
+                    })
+                }
+
+        # 4) Cache store
         put_cached_response(q, response_obj)
 
-        return {"statusCode": 200, "body": json.dumps(make_json_safe(response_obj))}
+        return {
+            "statusCode": 200,
+            "headers": CORS_HEADERS,
+            "body": json.dumps(make_json_safe(response_obj))
+        }
 
     except Exception as e:
         return {
             "statusCode": 500,
+            "headers": CORS_HEADERS,
             "body": json.dumps({
                 "error": "Internal server error",
                 "details": str(e)

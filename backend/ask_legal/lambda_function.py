@@ -220,6 +220,10 @@ def lambda_handler(event, context):
 
         # 2) Retrieval
         top, best_score = retrieve_top_contexts(q, k=3)
+        sources = [
+            {"section": c["section"], "category": c["category"]}
+            for c in top
+        ]
 
         if best_score >= 0.75:
             top = top[:1]
@@ -248,6 +252,7 @@ def lambda_handler(event, context):
             response_obj["model_used"] = "claude"
             response_obj["cache_hit"] = False
             response_obj["retrieval_score"] = best_score
+            response_obj["sources_used"] = sources
         except ClientError as e:
             # 4) Fallback to Nova
             response_obj = call_nova_fallback(q, top)
@@ -255,6 +260,7 @@ def lambda_handler(event, context):
             response_obj["cache_hit"] = False
             response_obj["fallback_reason"] = str(e)
             response_obj["retrieval_score"] = best_score
+            response_obj["sources_used"] = sources
 
         # 5) Cache store
         put_cached_response(q, response_obj)

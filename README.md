@@ -1,61 +1,60 @@
 # PYTHon-AI-for-Bharat
 # Legal AI Assistant for Bharat
 
-![Python](https://img.shields.io/badge/Python-3776AB?style=for-the-badge&logo=python&logoColor=white)
-![AWS Lambda](https://img.shields.io/badge/AWS_Lambda-FF9900?style=for-the-badge&logo=awslambda&logoColor=white)
-![Amazon S3](https://img.shields.io/badge/Amazon_S3-569A31?style=for-the-badge&logo=amazons3&logoColor=white)
-![Amazon DynamoDB](https://img.shields.io/badge/DynamoDB-4053D6?style=for-the-badge&logo=amazondynamodb&logoColor=white)
-![AWS Amplify](https://img.shields.io/badge/AWS_Amplify-FF9900?style=for-the-badge&logo=awsamplify&logoColor=white)
-![Amazon Bedrock](https://img.shields.io/badge/Amazon_Bedrock-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white)
-![Claude](https://img.shields.io/badge/Claude-3_Haiku-blue?style=for-the-badge)
-![Amazon Titan](https://img.shields.io/badge/Titan-Embeddings-orange?style=for-the-badge)
+<p align="center">
+
+<img src="https://img.shields.io/badge/Python-Backend-3776AB?style=for-the-badge&logo=python&logoColor=white"/>
+<img src="https://img.shields.io/badge/AWS-Serverless-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white"/>
+<img src="https://img.shields.io/badge/RAG-Legal_AI-purple?style=for-the-badge"/>
+<img src="https://img.shields.io/badge/LLM-Claude_3_Haiku-blue?style=for-the-badge"/>
+<img src="https://img.shields.io/badge/Embeddings-Amazon_Titan-orange?style=for-the-badge"/>
+
+</p>
 
 ---
 
 # Overview
 
-Legal AI Assistant for Bharat is an AI-powered legal awareness system designed to help citizens understand their rights and legal procedures in simple language.
+Legal AI Assistant for Bharat is an AI-powered legal awareness platform designed to help citizens understand their legal rights and procedures in simple language.
 
-The system uses Retrieval-Augmented Generation (RAG) to retrieve relevant legal information from a curated knowledge base and then uses AI models to explain the retrieved legal text in clear and understandable terms.
+The system uses Retrieval-Augmented Generation (RAG) to retrieve relevant legal information from a curated knowledge base and then uses large language models to convert complex legal text into understandable explanations.
 
-The backend is built on AWS serverless infrastructure to ensure scalability, reliability, and cost efficiency.
+The platform is built using a scalable AWS serverless architecture that ensures reliability, efficiency, and low operational cost.
 
-Instead of allowing the language model to generate answers freely, the system first retrieves verified legal context before asking the model to explain it. This approach reduces hallucinations and increases trust in the generated responses.
+Unlike traditional AI systems that generate answers directly, this system retrieves legal context first and then asks the AI model to explain it. This significantly reduces hallucinations and increases trust in the responses.
 
 ---
 
 # Problem Statement
 
-Legal information is often difficult for ordinary citizens to access and understand due to complex language and fragmented documentation.
+Legal information is often difficult for citizens to access and understand due to:
 
-Most people struggle to determine:
+• Complex legal language  
+• Large and fragmented legal documents  
+• Lack of contextual explanations  
+• Difficulty identifying correct legal authorities  
 
-- their legal rights  
-- correct legal procedures  
-- which authorities to contact  
-- what actions to take during legal situations  
-
-Traditional search systems return raw legal text which is difficult for non-experts to interpret.
+Most online search results simply show raw legal text which is difficult for non-experts to interpret.
 
 ---
 
 # Solution
 
-This project introduces an AI-assisted legal awareness system that combines semantic search and language models.
+This system introduces an AI-assisted legal awareness platform.
 
-The system works by:
+The backend:
 
-1. Retrieving the most relevant legal sections from a curated dataset
-2. Using AI models to interpret the retrieved information
-3. Producing clear and structured explanations for the user
+1. Retrieves relevant legal sections from a curated dataset
+2. Uses AI models to explain those sections in simple language
+3. Produces structured responses that guide users on rights and actions
 
-This retrieval-first architecture ensures that the AI responses remain grounded in actual legal text.
+The retrieval-first architecture ensures responses remain grounded in actual legal sources.
 
 ---
 
 # System Architecture
 
-The system uses a serverless AWS architecture to process legal queries.
+The backend follows a retrieval-augmented serverless architecture.
 
 ```mermaid
 flowchart TD
@@ -76,7 +75,7 @@ VectorSearch --> TopChunks[Retrieve Top Legal Chunks]
 
 TopChunks --> Claude[Claude 3 Haiku]
 
-Claude -->|If Failure| Nova[Amazon Nova Fallback]
+Claude -->|Failure| Nova[Amazon Nova Fallback]
 
 Claude --> Response[Generate Structured Response]
 
@@ -91,66 +90,84 @@ ReturnFast --> ReturnUser
 
 ---
 
-# Tech Stack
+# Technology Stack
 
-## Backend
+## Core Technologies
 
-<img src="https://img.shields.io/badge/Python_Backend-3776AB?style=for-the-badge&logo=python&logoColor=white"/>
-<img src="https://img.shields.io/badge/AWS_Lambda-Serverless_Runtime-FF9900?style=for-the-badge&logo=awslambda&logoColor=white"/>
-<img src="https://img.shields.io/badge/Serverless-Architecture-FF4F8B?style=for-the-badge&logo=serverless&logoColor=white"/>
+<p>
 
-The backend is implemented in Python and runs as a serverless architecture using AWS Lambda.
+<img src="https://skillicons.dev/icons?i=python,aws"/>
+
+</p>
+
+• Python  
+• AWS Serverless Architecture  
 
 ---
 
-## Cloud Infrastructure
+## AWS Infrastructure
 
-<img src="https://img.shields.io/badge/Amazon_S3-569A31?style=for-the-badge&logo=amazons3&logoColor=white"/>
-<img src="https://img.shields.io/badge/Amazon_DynamoDB-4053D6?style=for-the-badge&logo=amazondynamodb&logoColor=white"/>
-<img src="https://img.shields.io/badge/Amazon_API_Gateway-FF4F8B?style=for-the-badge&logo=amazonapigateway&logoColor=white"/>
-<img src="https://img.shields.io/badge/AWS_Amplify-FF9900?style=for-the-badge&logo=awsamplify&logoColor=white"/>
-<img src="https://img.shields.io/badge/Amazon_CloudWatch-FF9900?style=for-the-badge&logo=amazoncloudwatch&logoColor=white"/>
+<p>
+
+<img src="https://img.shields.io/badge/Amazon_S3-Storage-569A31?style=for-the-badge&logo=amazons3&logoColor=white"/>
+<img src="https://img.shields.io/badge/Amazon_DynamoDB-Vector_DB-4053D6?style=for-the-badge&logo=amazondynamodb&logoColor=white"/>
+<img src="https://img.shields.io/badge/AWS_Lambda-Compute-FF9900?style=for-the-badge&logo=awslambda&logoColor=white"/>
+<img src="https://img.shields.io/badge/API_Gateway-REST_API-FF4F8B?style=for-the-badge&logo=amazonapigateway&logoColor=white"/>
+<img src="https://img.shields.io/badge/AWS_Amplify-Frontend-FF9900?style=for-the-badge&logo=awsamplify&logoColor=white"/>
+<img src="https://img.shields.io/badge/CloudWatch-Monitoring-FF9900?style=for-the-badge&logo=amazoncloudwatch&logoColor=white"/>
+
+</p>
 
 | Service | Role |
 |------|------|
 | Amazon S3 | Stores legal dataset |
-| AWS Lambda | Executes backend logic |
-| DynamoDB | Stores embeddings and query cache |
-| API Gateway | Exposes the /ask API |
-| AWS Amplify | Hosts frontend |
-| CloudWatch | Logging and monitoring |
+| AWS Lambda | Backend serverless compute |
+| DynamoDB | Vector storage and cache |
+| API Gateway | Public REST API |
+| AWS Amplify | Frontend hosting |
+| CloudWatch | Logs and monitoring |
 
 ---
 
-## AI and Machine Learning
+# AI and Machine Learning Stack
 
-<img src="https://img.shields.io/badge/Amazon_Bedrock-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white"/>
-<img src="https://img.shields.io/badge/Amazon_Titan_Text_Embeddings-orange?style=for-the-badge"/>
+<p>
+
+<img src="https://img.shields.io/badge/Amazon_Bedrock-Foundation_Models-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white"/>
+<img src="https://img.shields.io/badge/Amazon_Titan-Text_Embeddings-orange?style=for-the-badge"/>
 <img src="https://img.shields.io/badge/Claude_3_Haiku-Anthropic-blue?style=for-the-badge"/>
 <img src="https://img.shields.io/badge/Amazon_Nova-Fallback_Model-green?style=for-the-badge"/>
+<img src="https://img.shields.io/badge/RAG-Retrieval_Augmented_Generation-purple?style=for-the-badge"/>
+<img src="https://img.shields.io/badge/Vector_Search-Cosine_Similarity-red?style=for-the-badge"/>
 
-The AI layer uses Amazon Bedrock to access foundation models.
+</p>
 
-Primary models used:
+Primary generation model  
+Anthropic Claude 3 Haiku
 
-Anthropic Claude 3 Haiku  
-Used for explaining retrieved legal sections in plain language.
+Fallback model  
+Amazon Nova
 
-Amazon Nova  
-Used as a fallback generation model to maintain system reliability.
-
-Amazon Titan Text Embeddings  
-Used for converting legal chunks and user queries into vector embeddings.
+Embedding model  
+Amazon Titan Text Embeddings
 
 ---
 
 # Backend Summary
 
-Our backend is a retrieval-augmented legal awareness system built on AWS.
+The backend is a retrieval-augmented legal awareness system deployed on AWS.
 
-When a user asks a legal question, the system first retrieves the most relevant legal sections from a curated legal knowledge base. Only after retrieval does the system use an LLM to explain those sections in simple language.
+When a user submits a question, the system retrieves the most relevant legal sections from the knowledge base before asking the AI model to generate an explanation.
 
-This retrieval-first design reduces hallucinations and ensures the response remains grounded in legal sources.
+This ensures that responses remain grounded in real legal text.
+
+The backend integrates:
+
+Amazon Bedrock for model access  
+AWS Lambda for serverless compute  
+Amazon S3 for dataset storage  
+DynamoDB for vector search and caching  
+API Gateway for API exposure  
 
 ---
 
@@ -158,90 +175,98 @@ This retrieval-first design reduces hallucinations and ensures the response rema
 
 ## Legal Knowledge Base
 
-The system uses a structured dataset called processed_chunks.json that contains curated legal information such as:
+The system uses a curated legal dataset stored as:
 
-- cybercrime
-- fraud
-- consumer protection
-- women's safety
-- public safety laws
+processed_chunks.json
+
+This dataset contains categorized legal sections such as:
+
+• cybercrime  
+• fraud  
+• consumer protection  
+• women safety laws  
+• public safety regulations  
 
 ---
 
-## One-Time Embedding Generation
+## Embedding Generation
 
-A Lambda function called embed_loader generates embeddings for the legal dataset.
+A dedicated Lambda function called **embed_loader** generates embeddings.
 
-The function:
+Steps performed:
 
-- reads legal chunks from Amazon S3
-- generates embeddings using Amazon Titan
-- stores embeddings in DynamoDB
+1. Load legal chunks from S3
+2. Generate embeddings using Amazon Titan
+3. Store vectors and metadata in DynamoDB
 
-This process runs only once to reduce repeated computation and cost.
+This process runs only once to avoid repeated computation.
 
 ---
 
 ## Query Processing
 
-When a user submits a question:
+When a request reaches the /ask endpoint:
 
-1. The backend checks whether the query already exists in cache.
-2. If cached, the stored answer is returned immediately.
-3. If not cached, the query is converted into an embedding.
-4. Vector similarity search is performed against stored embeddings.
-5. The most relevant legal sections are retrieved.
+1. The backend checks if the query exists in cache
+2. If cached, the stored response is returned instantly
+3. If not cached, the query embedding is generated
+4. Vector similarity search retrieves relevant legal chunks
+5. Retrieved context is passed to the LLM
 
 ---
 
 ## AI Explanation
 
-The retrieved legal context is passed to the language model with strict instructions:
+The language model receives strict instructions:
 
-- use only the provided legal context
-- do not invent external information
-- generate structured JSON output
+• use only retrieved legal context  
+• do not invent external facts  
+• produce structured JSON output  
 
 The response includes:
 
-- rights
-- recommended actions
-- authority information
-- legal article references
-- disclaimer
+• legal rights  
+• recommended actions  
+• responsible authorities  
+• cited article  
+• disclaimer  
 
 ---
 
-## Query Caching
+## Query Cache
 
-After generating a response, the backend stores it in DynamoDB.
+After generating the response, the system stores it in DynamoDB.
 
-Future identical queries are served directly from cache without calling the model again, improving speed and reducing cost.
+Future identical queries are served directly from cache which:
+
+• reduces Bedrock cost  
+• improves response speed  
+• increases scalability  
 
 ---
 
 # Key Backend Features
 
 Retrieval-first architecture  
-Legal sections are retrieved before AI generation.
+The system retrieves legal sources before AI explanation.
 
 One-time embeddings  
-Legal dataset embeddings are generated once and reused.
+Embeddings are generated once and reused.
 
 Semantic search  
-Embedding-based similarity enables meaning-based search rather than keyword matching.
+Embedding similarity enables meaning-based search.
 
 Query caching  
-Improves response speed and reduces model usage.
+Repeated queries are served instantly.
 
-Fallback model reliability  
-Automatically switches to Amazon Nova if Claude is unavailable.
+Fallback reliability  
+Automatic switch from Claude to Nova if needed.
 
-Structured JSON output  
-Ensures consistent responses for frontend rendering.
+Structured output  
+Clean JSON responses for frontend rendering.
 
 Source transparency  
-Responses can expose retrieved legal sources and article references.
+Responses include referenced legal sources.
 
 ---
 
@@ -274,30 +299,27 @@ legal-ai-assistant/
 
 # Deployment Steps
 
-1. Upload legal dataset to Amazon S3  
-2. Run embed_loader Lambda to generate embeddings  
-3. Deploy ask_legal Lambda function  
-4. Configure API Gateway /ask endpoint  
-5. Deploy frontend using AWS Amplify  
+1 Clone the repository  
+
+2 Upload the legal dataset to Amazon S3  
+
+3 Run the embed_loader Lambda function to generate embeddings  
+
+4 Deploy the ask_legal Lambda function  
+
+5 Configure the API Gateway /ask endpoint  
+
+6 Deploy frontend using AWS Amplify  
 
 ---
 
 # Future Improvements
 
-- multilingual legal support  
-- conversational legal assistant  
-- larger legal knowledge base  
-- real-time legal updates  
-- improved citation transparency  
-
----
-
-# Contributors
-
-Team PYTHon – AI for Bharat Hackathon
-
-Tanishka Shukla  
-Team Members
+• multilingual legal assistance  
+• conversational AI interface  
+• expanded legal dataset coverage  
+• real-time legal updates  
+• improved legal citation transparency  
 
 ---
 

@@ -8,6 +8,9 @@
 <img src="https://img.shields.io/badge/RAG-Legal_AI-purple?style=for-the-badge"/>
 <img src="https://img.shields.io/badge/LLM-Claude_3_Haiku-blue?style=for-the-badge"/>
 <img src="https://img.shields.io/badge/Embeddings-Amazon_Titan-orange?style=for-the-badge"/>
+<img src="https://img.shields.io/badge/Vite-Frontend-green"/>
+
+
 
 </p>
 

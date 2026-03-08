@@ -1,57 +1,86 @@
-# ============================================
-# PHASE 5 — CREATE EMBEDDINGS (AWS BEDROCK)
-# ============================================
+import os, json, boto3
+from decimal import Decimal
 
-import boto3
-import json
-import time
+s3 = boto3.client("s3")
+ddb = boto3.resource("dynamodb")
+bedrock = boto3.client("bedrock-runtime", region_name="us-east-1")
 
-print("\n🧠 Starting embedding generation...\n")
+DATA_BUCKET = os.environ["DATA_BUCKET"]
+DATA_KEY = os.environ["DATA_KEY"]
+DDB_TABLE = os.environ["DDB_TABLE"]
+JOB_TABLE = os.environ["JOB_TABLE"]
+TITAN_MODEL_ID = os.environ["TITAN_MODEL_ID"]
+ENABLE_EMBEDDINGS = os.environ.get("ENABLE_EMBEDDINGS", "false").lower() == "true"
 
-# --------------------------------------------
-# 1. Create Bedrock Runtime Client
-# --------------------------------------------
-bedrock = boto3.client(
-    service_name="bedrock-runtime",
-    region_name="us-east-1"   # IMPORTANT: Bedrock region
-)
+emb_table = ddb.Table(DDB_TABLE)
+job_table = ddb.Table(JOB_TABLE)
 
-# --------------------------------------------
-# 2. Load processed chunks
-# --------------------------------------------
-with open("data/processed_chunks.json", "r", encoding="utf-8") as f:
-    data = json.load(f)
-
-print(f"✅ Loaded {len(data)} chunks\n")
-
-# --------------------------------------------
-# 3. Generate embeddings
-# --------------------------------------------
-for i, chunk in enumerate(data):
-
-    print(f"Processing {i+1}/{len(data)} → {chunk['section']}")
-
-    response = bedrock.invoke_model(
-        modelId="amazon.titan-embed-text-v1",
-        body=json.dumps({
-            "inputText": chunk["text"]
-        })
+def titan_embed(text: str) -> list[float]:
+    resp = bedrock.invoke_model(
+        modelId=TITAN_MODEL_ID,
+        contentType="application/json",
+        accept="application/json",
+        body=json.dumps({"inputText": text})
     )
+    body = json.loads(resp["body"].read())
+    return body["embedding"]
 
-    # Read response
-    result = json.loads(response["body"].read())
+def to_decimal_list(vec: list[float]) -> list:
+    return [Decimal(str(x)) for x in vec]
 
-    # Save embedding into chunk
-    chunk["embedding"] = result["embedding"]
+def already_done(job_id: str) -> bool:
+    r = job_table.get_item(Key={"job_id": job_id})
+    return "Item" in r
 
-    # ⭐ VERY IMPORTANT: Prevent AWS throttling
-    time.sleep(2)
+def mark_done(job_id: str, processed: int):
+    job_table.put_item(Item={"job_id": job_id, "status": "DONE", "processed": processed})
 
-# --------------------------------------------
-# 4. Save embedded dataset
-# --------------------------------------------
-with open("data/embedded_chunks.json", "w", encoding="utf-8") as f:
-    json.dump(data, f, indent=2)
+def lambda_handler(event, context):
+    if not ENABLE_EMBEDDINGS:
+        return {
+            "statusCode": 503,
+            "body": json.dumps({
+                "error": "Embeddings disabled. Set ENABLE_EMBEDDINGS=true after billing/model access is ready."
+            })
+        }
 
-print("\n✅ Embeddings created successfully!")
-print("📁 Saved file → data/embedded_chunks.json\n")
+    job_id = "embed_processed_chunks_v1"
+    if already_done(job_id):
+        return {
+            "statusCode": 200,
+            "body": json.dumps({
+                "message": "Already embedded earlier (job locked).",
+                "job_id": job_id
+            })
+        }
+
+    obj = s3.get_object(Bucket=DATA_BUCKET, Key=DATA_KEY)
+    chunks = json.loads(obj["Body"].read())
+
+    processed = 0
+    for idx, c in enumerate(chunks):
+        text = (c.get("text") or "").strip()
+        if not text:
+            continue
+
+        chunk_id = (c.get("section") or f"chunk_{idx}").strip()
+        vec = titan_embed(text)
+
+        emb_table.put_item(Item={
+            "chunk_id": chunk_id,
+            "section": c.get("section", ""),
+            "category": c.get("category", ""),
+            "text": text,
+            "vector": to_decimal_list(vec)
+        })
+        processed += 1
+
+    mark_done(job_id, processed)
+
+    return {
+        "statusCode": 200,
+        "body": json.dumps({
+            "processed": processed,
+            "job_id": job_id
+        })
+    }

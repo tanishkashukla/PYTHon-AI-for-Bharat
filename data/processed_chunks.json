@@ -1,57 +1,188 @@
-[
+﻿[
+    
     {
-        "section": "IPC 420",
-        "category": "Fraud / Cybercrime",
-        "text": "Cheating and dishonestly inducing delivery of property —\n\nWhoever cheats and thereby dishonestly induces the person deceived to deliver any property to any person, or to make, alter or destroy the whole or any part of a valuable security, or anything which is signed or sealed, and which is capable of being converted into a valuable security, shall be punished with imprisonment of either description for a term which may extend to seven years, and shall also be liable to fine."
+        "section":  "IPC 420",
+        "category":  "Fraud / Cybercrime",
+        "text":  "Cheating and dishonestly inducing delivery of property â€” Whoever cheats and thereby dishonestly induces the person deceived to deliver any property shall be punished with imprisonment up to seven years and fine."
     },
     {
-        "section": "IPC 406",
-        "category": "Criminal Breach of Trust",
-        "text": "Punishment for criminal breach of trust.\n\nWhoever commits criminal breach of trust shall be punished with imprisonment of either description for a term which may extend to three years, or with fine, or with both."
+        "section":  "IPC 406",
+        "category":  "Criminal Breach of Trust",
+        "text":  "Punishment for criminal breach of trust. Whoever commits criminal breach of trust shall be punished with imprisonment up to three years or fine or both."
     },
     {
-        "section": "IPC 354",
-        "category": "Women Safety",
-        "text": "Assault or criminal force to woman with intent to outrage her modesty.\n\nWhoever assaults or uses criminal force to any woman, intending to outrage or knowing it to be likely that he will thereby outrage her modesty, shall be punished with imprisonment of either description for a term which shall not be less than one year but which may extend to five years, and shall also be liable to fine."
+        "section":  "IPC 354",
+        "category":  "Women Safety",
+        "text":  "Assault or criminal force to woman with intent to outrage her modesty shall be punishable with imprisonment from one year up to five years and fine."
     },
     {
-        "section": "IPC 415",
-        "category": "Fraud / Cybercrime",
-        "text": "Cheating.\n\nWhoever, by deceiving any person, fraudulently or dishonestly induces the person so deceived to deliver any property to any person, or to consent that any person shall retain any property, or intentionally induces the person so deceived to do or omit to do anything which he would not do or omit if he were not so deceived, and which act or omission causes or is likely to cause damage or harm to that person in body, mind, reputation or property, is said to cheat.\n\nExplanation:\nA dishonest concealment of facts is a deception within the meaning of this section.\n\nExamples:\n• Pretending to be a government officer to obtain goods.\n• Selling fake branded items by deception.\n• Showing false samples to induce purchase.\n• Taking money without intention to repay."
+        "section":  "IPC 415",
+        "category":  "Fraud / Cybercrime",
+        "text":  "Cheating. Whoever deceives another person and dishonestly induces them to deliver property or do something causing harm is said to cheat."
     },
     {
-        "section": "IT ACT 66C",
-        "category": "Cybercrime",
-        "text": "Punishment for identity theft.\n\nWhoever fraudulently uses another person's electronic signature, password, or unique identification feature shall be punished with imprisonment up to three years and fine up to one lakh rupees."
+        "section":  "IT ACT 66C",
+        "category":  "Cybercrime",
+        "text":  "Punishment for identity theft. Fraudulent use of another person\u0027s password or digital signature is punishable with imprisonment up to three years and fine."
     },
     {
-        "section": "IT ACT 66D",
-        "category": "Cybercrime",
-        "text": "Cheating by personation using computer resources.\n\nWhoever cheats by impersonating another person using communication devices or computer resources shall be punished with imprisonment up to three years and fine up to one lakh rupees."
+        "section":  "IT ACT 66D",
+        "category":  "Cybercrime",
+        "text":  "Cheating by personation using computer resources. Impersonating another person online to cheat is punishable with imprisonment up to three years and fine."
     },
     {
-        "section": "IPC 509",
-        "category": "Women Safety",
-        "text": "Word, gesture or act intended to insult the modesty of a woman.\n\nWhoever insults the modesty of a woman through words, gestures, sounds, or invasion of privacy shall be punished with imprisonment up to three years and fine."
+        "section":  "IPC 509",
+        "category":  "Women Safety",
+        "text":  "Word or gesture intended to insult the modesty of a woman shall be punishable with imprisonment up to three years and fine."
     },
     {
-        "section": "IPC 354A",
-        "category": "Women Safety",
-        "text": "Sexual harassment.\n\nSexual harassment includes unwelcome physical contact, demands for sexual favors, showing pornography against a woman's will, or sexually colored remarks. Punishment may extend to three years imprisonment or fine or both."
+        "section":  "IPC 354A",
+        "category":  "Women Safety",
+        "text":  "Sexual harassment includes unwelcome physical contact, demands for sexual favors, showing pornography without consent, or sexually colored remarks."
     },
     {
-        "section": "CPA SECTION 12",
-        "category": "Consumer Rights",
-        "text": "How a consumer complaint can be filed.\n\nA consumer, consumer association, group of consumers, or government authority may file a complaint before a District Consumer Forum regarding defective goods or deficient services."
+        "section":  "CPA SECTION 12",
+        "category":  "Consumer Rights",
+        "text":  "A consumer or group of consumers may file a complaint before a consumer dispute redressal commission regarding defective goods or deficient services."
     },
     {
-        "section": "IPC 506",
-        "category": "Public Safety",
-        "text": "Criminal intimidation.\n\nWhoever threatens another person causing fear of injury to body, reputation, or property shall be punished with imprisonment, or fine, or both."
+        "section":  "IPC 506",
+        "category":  "Public Safety",
+        "text":  "Criminal intimidation. Whoever threatens another person causing fear of injury to body, reputation, or property shall be punished with imprisonment or fine."
     },
     {
-        "section": "IPC 468",
-        "category": "Fraud",
-        "text": "Forgery for purpose of cheating.\n\nWhoever creates a forged document intending it to be used for cheating shall be punished with imprisonment up to seven years and fine."
+        "section":  "IPC 468",
+        "category":  "Fraud",
+        "text":  "Forgery for purpose of cheating shall be punishable with imprisonment up to seven years and fine."
+    },
+    {
+        "section":  "IPC 379",
+        "category":  "Theft",
+        "text":  "Punishment for theft. Whoever commits theft shall be punished with imprisonment up to three years or fine or both."
+    },
+    {
+        "section":  "IPC 384",
+        "category":  "Fraud / Extortion",
+        "text":  "Punishment for extortion. Whoever intentionally puts a person in fear of injury to obtain property commits extortion."
+    },
+    {
+        "section":  "IPC 392",
+        "category":  "Robbery",
+        "text":  "Punishment for robbery. Whoever commits robbery shall be punished with rigorous imprisonment up to ten years and fine."
+    },
+    {
+        "section":  "IPC 376",
+        "category":  "Women Safety",
+        "text":  "Punishment for rape includes rigorous imprisonment not less than ten years which may extend to life imprisonment."
+    },
+    {
+        "section":  "IPC 498A",
+        "category":  "Women Safety",
+        "text":  "Cruelty by husband or relatives of husband towards a married woman is punishable with imprisonment up to three years and fine."
+    },
+    {
+        "section":  "IPC 354D",
+        "category":  "Women Safety",
+        "text":  "Stalking. Repeatedly following or contacting a woman despite clear disinterest constitutes stalking."
+    },
+    {
+        "section":  "IT ACT 66",
+        "category":  "Cybercrime",
+        "text":  "Computer related offences such as unauthorized access, data theft, or introducing virus are punishable with imprisonment up to three years."
+    },
+    {
+        "section":  "IT ACT 67",
+        "category":  "Cybercrime",
+        "text":  "Publishing or transmitting obscene material in electronic form is punishable with imprisonment and fine."
+    },
+    {
+        "section":  "IT ACT 72",
+        "category":  "Cybercrime",
+        "text":  "Breach of confidentiality and privacy of electronic records is punishable with imprisonment or fine."
+    },
+    {
+        "section":  "MOTOR VEHICLE ACT 184",
+        "category":  "Motor Vehicle Act",
+        "text":  "Dangerous driving that endangers public safety is punishable with imprisonment or fine."
+    },
+    {
+        "section":  "MOTOR VEHICLE ACT 185",
+        "category":  "Motor Vehicle Act",
+        "text":  "Driving under the influence of alcohol or drugs is punishable with imprisonment or fine."
+    },
+    {
+        "section":  "CONSUMER PROTECTION ACT SECTION 2",
+        "category":  "Consumer Rights",
+        "text":  "Defines rights of consumers including right to safety, right to information, and right to seek redressal."
+    },
+    {
+        "section":  "CONSUMER PROTECTION ACT SECTION 35",
+        "category":  "Consumer Rights",
+        "text":  "Consumers may file complaints regarding defective goods or deficient services before the consumer commission."
+    },
+    {
+        "section":  "TRANSFER OF PROPERTY ACT 54",
+        "category":  "Property Law",
+        "text":  "Sale of immovable property refers to transfer of ownership in exchange for a price."
+    },
+    {
+        "section":  "TRANSFER OF PROPERTY ACT 105",
+        "category":  "Property Law",
+        "text":  "Lease of property refers to transfer of the right to enjoy property for a specified time in exchange for rent."
+    },
+    {
+        "section":  "HINDU MARRIAGE ACT 13",
+        "category":  "Family Matters",
+        "text":  "Divorce may be granted on grounds such as cruelty, desertion, or conversion."
+    },
+    {
+        "section":  "HINDU SUCCESSION ACT 6",
+        "category":  "Family Matters",
+        "text":  "Daughters have equal rights as sons in ancestral property."
+    },
+    {
+        "section":  "MINIMUM WAGES ACT 12",
+        "category":  "Employment Law",
+        "text":  "Employers must pay workers wages not less than the minimum rate fixed by law."
+    },
+    {
+        "section":  "INDUSTRIAL DISPUTES ACT 2A",
+        "category":  "Employment Law",
+        "text":  "Dismissal or termination disputes between employer and worker are treated as industrial disputes."
+    },
+    {
+        "section":  "RIGHT TO EDUCATION ACT 3",
+        "category":  "Education Law",
+        "text":  "Every child aged six to fourteen has the right to free and compulsory education."
+    },
+    {
+        "section":  "RIGHT TO EDUCATION ACT 12",
+        "category":  "Education Law",
+        "text":  "Private schools must reserve 25 percent seats for economically weaker sections."
+    },
+    {
+        "section":  "INCOME TAX ACT 139",
+        "category":  "Tax Law",
+        "text":  "Persons whose income exceeds the taxable limit must file income tax returns."
+    },
+    {
+        "section":  "GST ACT 9",
+        "category":  "Tax Law",
+        "text":  "Goods and Services Tax shall be levied on supply of goods and services."
+    },
+    {
+        "section":  "SENIOR CITIZENS ACT 4",
+        "category":  "Senior Citizens",
+        "text":  "Children or relatives must maintain parents or senior citizens unable to maintain themselves."
+    },
+    {
+        "section":  "MENTAL HEALTHCARE ACT 18",
+        "category":  "Healthcare Law",
+        "text":  "Every person has the right to access affordable and quality mental healthcare services."
+    },
+    {
+        "section":  "CLINICAL ESTABLISHMENTS ACT 12",
+        "category":  "Healthcare Law",
+        "text":  "All clinical establishments must be registered and follow government standards."
     }
 ]
